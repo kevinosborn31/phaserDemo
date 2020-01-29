@@ -5,7 +5,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 300 },
+      gravity: { y: 250 },
       debug: false
     }
   },
@@ -47,7 +47,7 @@ function create() {
   dude = this.physics.add.sprite(100, 450, 'dude');
   dude.setBounce(0.2); // optional
   dude.setCollideWorldBounds(true);
-  dude.body.setGravityY(300);
+  dude.body.setGravityY(60);
   this.physics.add.collider(dude, platforms)
 
   // create key directions
@@ -71,6 +71,19 @@ function create() {
     frameRate: 10,
     repeat: -1
   });
+  // stars
+  stars = this.physics.add.group({
+    key: 'star',
+    repeat: 11,
+    setXY: { x: 12, y: 0, stepX: 70 }
+  });
+
+  stars.children.iterate(child => {
+    child.setBounceY(Phaser.Math.FloatBetween(0.8));
+  });
+
+  this.physics.add.collider(stars, platforms);
+  this.physics.add.overlap(dude, stars, collectStar, null, this);
 }
 
 function update() {
@@ -86,4 +99,12 @@ function update() {
     dude.setVelocityX(0);
     dude.anims.play('turn');
   }
+
+  if (cursors.up.isDown && dude.body.touching.down) {
+    dude.setVelocityY(-330);
+  }
+}
+
+function collectStar(dude, star){
+  star.disableBody(true, true);
 }
