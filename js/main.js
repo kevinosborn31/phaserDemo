@@ -44,6 +44,8 @@ function create() {
   platforms.create(750, 220, 'ground');
 
   dude = this.physics.add.sprite(100, 450, 'dude');
+  dude.setBounce(0.2); // optional
+  dude.setCollideWorldBounds(true);
 }
 
 function update() {
