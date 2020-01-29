@@ -19,6 +19,10 @@ const config = {
 
 const game = new Phaser.Game(config);
 
+// Declare some variables
+let platforms;
+let dude;
+
 function preload() {
   // load in our assets
   this.load.image('sky', 'assets/sky.png');
@@ -38,6 +42,8 @@ function create() {
   platforms.create(600, 400, 'ground');
   platforms.create(50, 250, 'ground');
   platforms.create(750, 220, 'ground');
+
+  dude = this.physics.add.sprite(100, 450, 'dude');
 }
 
 function update() {
