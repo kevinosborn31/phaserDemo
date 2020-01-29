@@ -22,6 +22,7 @@ const game = new Phaser.Game(config);
 // Declare some variables
 let platforms;
 let dude;
+let cursors;
 
 function preload() {
   // load in our assets
@@ -73,5 +74,16 @@ function create() {
 }
 
 function update() {
+  cursors = this.input.keyboard.createCursorKeys();
 
+  if (cursors.left.isDown) {
+    dude.setVelocityX(-160);
+    dude.anims.play('left')
+  } else if (cursors.right.isDown) {
+    dude.setVelocityX(160);
+    dude.anims.play('right', true);
+  } else {
+    dude.setVelocityX(0);
+    dude.anims.play('turn');
+  }
 }
