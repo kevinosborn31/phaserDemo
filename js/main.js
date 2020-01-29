@@ -79,11 +79,15 @@ function create() {
   });
 
   stars.children.iterate(child => {
-    child.setBounceY(Phaser.Math.FloatBetween(0.8));
+    child.setBounceY(Phaser.Math.FloatBetween(0, 0.8));
   });
 
   this.physics.add.collider(stars, platforms);
   this.physics.add.overlap(dude, stars, collectStar, null, this);
+
+  function collectStar(dude, star){
+    star.disableBody(true, true);
+  }
 }
 
 function update() {
@@ -103,8 +107,4 @@ function update() {
   if (cursors.up.isDown && dude.body.touching.down) {
     dude.setVelocityY(-330);
   }
-}
-
-function collectStar(dude, star){
-  star.disableBody(true, true);
 }
